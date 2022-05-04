@@ -1,0 +1,23 @@
+.button-them {
+  cursor: pointer;
+
+  margin: 30px;
+  width: 130px;
+  height: 50px;
+
+
+  &:hover {
+    opacity: .5;
+  }
+
+  &._blue {
+    background-color: blue;
+    color: white;
+  }
+
+  &._green {
+    background-color: green;
+    color: white;
+  }
+
+}

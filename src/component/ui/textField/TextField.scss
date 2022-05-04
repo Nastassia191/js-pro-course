@@ -1,0 +1,24 @@
+.text-field-conteiner {
+
+  .label {
+    margin-bottom: 8px;
+    color: rgb(15, 15, 27);
+    font-size: 18px;
+  }
+
+  .input {
+    border: 1px rgb(115, 115, 220) solid;
+    border-radius: 16px;
+    padding: 8px 16px;
+    outline: none;
+
+    &:hover {
+      border: 1px rgb(36, 36, 225) solid;
+    }
+
+    &:focus {
+      border: 1px rgb(92, 92, 207) solid;
+      outline: 1px solid rgb(92, 92, 207);
+    }
+  }
+}
