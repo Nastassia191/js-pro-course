@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setValue, shiftValue } from "../../store/clicker/actionCreators";
+import React from "react";
+import { useDispatch } from "react-redux";
+//import actions from "../../store/actions";
+import { useActions } from "../hooks/useActions";
+//import { setValue, shiftValue } from "../../store/clicker/actionCreators";
+
+import { useSelector } from "../hooks/useSelector";
+
+
 
 const Clicker: React.FC = () => {
 
+  const count = useSelector(state => state.clicker.value)
 
-  const count = useSelector((state: any) => state.clicker.value);
-  const dispatch = useDispatch();
+  const { setValue, shiftValue } = useActions();
+  // const count = useSelector((state: any) => state.clicker.value); 
+  //const dispatch = useDispatch();
 
-  const reset = () => dispatch(setValue(0));
+  //const reset = () => dispatch(x.setValue(0));
+  const reset = () => setValue(0);
+  const increment = () => shiftValue(1);
+  const decriment = () => shiftValue(- 1);
 
-  const increment = () => {
-    dispatch(shiftValue(1));
-  }
-
-  const decriment = () => {
-    dispatch(shiftValue(- 1));
-  }
 
   return (
     <div>
