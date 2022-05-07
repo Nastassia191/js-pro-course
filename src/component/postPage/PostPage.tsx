@@ -7,19 +7,33 @@ import usePost from '../../apiHooks/usePost';
 import { useParams } from 'react-router-dom';
 
 import Image from '../image/Image';
+import PostsType from '../../types/PostsType';
 
 import "./PostPage.scss";
 
+import { useSelector } from '../hooks/useSelector';
+import { useActions } from '../hooks/useActions';
 
 
-//const id = 1;
+
 
 
 
 const PostPage: React.FC = () => {
 
   const { id } = useParams();
-  const { data, loading, error } = usePost(id);
+
+  const data = useSelector(state => state.post.data);
+  const loading = useSelector(state => state.post.loading);
+  const error = useSelector(state => state.post.error);
+
+  const { fetchPost } = useActions();
+
+
+  useEffect(() => {
+    fetchPost(id);
+  }, [id]);
+
 
 
 
