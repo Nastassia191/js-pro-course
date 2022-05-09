@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import PostCard from '../posts/card/Postcards';
+import PostCard from '../postsPage/card/Postcards';
 import usePost from '../../apiHooks/usePost';
 
 import { useParams } from 'react-router-dom';

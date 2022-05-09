@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import PostsFilterType from "../../component/posts/PostsFilterTypes";
+import PostsFilterType from "../../component/postsPage/PostsFilterTypes";
 import PostsType from "../../types/PostsType";
 import actions from "../actions";
 //import { PostActionType, PostActionTypes } from "./types";

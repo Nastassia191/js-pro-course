@@ -4,7 +4,7 @@ import Timer from './component/timer/Timer';
 //import logo from './logo.svg';
 import './App.scss';
 //import Button from './component/button/Button';
-import Posts from './component/posts/Posts'
+import PostsPage from './component/postsPage/PostsPage'
 import Header from './component/header/Header';
 import Registration from './component/registration/Registration'
 import Login from './component/login/Login';
@@ -37,7 +37,7 @@ const App: React.FC = () => {
             <Route path='/login/*' element={<Login />} />
             <Route path='/registration/*' element={<Registration />} />
             <Route path='/posts'  >
-              <Route index element={<Posts />} />
+              <Route index element={<PostsPage />} />
               <Route path=':id' element={<PostPage />} />
             </Route>
             <Route path='*' element={<Navigate to='/posts' />} />

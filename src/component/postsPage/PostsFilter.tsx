@@ -6,7 +6,7 @@ import TextField from '../ui/textField/TextField';
 import { setLimit, setOrdering, setPage, setAuthor, setLesson } from './PostsFilterActionCreators';
 
 
-import './Posts.scss';
+//import './PostsPage .scss';
 
 type PropsType = {
   count: number,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PostsFilterTypes from '../component/posts/PostsFilterTypes';
+import PostsFilterTypes from '../component/postsPage/PostsFilterTypes';
 import PostsType from '../types/PostsType';
 import useRequest from './useRequest';
 

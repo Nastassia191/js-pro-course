@@ -5,7 +5,7 @@ import usePosts from '../../apiHooks/usePosts';
 import PostsFilter from './PostsFilter';
 import { initialState, PostsFilterRuducer } from './PostsFilterRuducer';
 
-import './Posts.scss';
+import './PostsPage.scss';
 import { useSelector } from '../hooks/useSelector';
 import { useActions } from '../hooks/useActions';
 
@@ -13,7 +13,7 @@ type PropsType = {};
 
 
 
-const Posts: React.FC<PropsType> = () => {
+const PostsPage: React.FC<PropsType> = () => {
 
   const [state, dispatch] = useReducer(PostsFilterRuducer, initialState);
 
@@ -25,6 +25,10 @@ const Posts: React.FC<PropsType> = () => {
   const loading = useSelector(state => state.posts.loading);
   const error = useSelector(state => state.posts.error);
   const count = useSelector(state => state.posts.count);
+  const marks = useSelector(state => state.posts.marks);
+  const filtredData = data.filter(item => marks.includes(item.id));
+
+
   useEffect(() => {
     fetchPosts(state);
   }, [state]);
@@ -48,4 +52,4 @@ const Posts: React.FC<PropsType> = () => {
 }
 
 
-export default Posts;
+export default PostsPage;
