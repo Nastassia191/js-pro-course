@@ -7,6 +7,7 @@ import Image from '../../image/Image';
 //import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import { ReactComponent as MarkIcon } from "../../assets/mark.svg";
 
 
 import './PostCards.scss'
@@ -28,7 +29,7 @@ type PropsType = {
 const PostCard: React.FC<PropsType> = ({ data }) => {
 
   const navigate = useNavigate();
-  const { likePost, dislikePost } = useActions();
+  const { likePost, dislikePost, markPost } = useActions();
   // const likes = useSelector(state => state.posts.likes);
   // const dislikes = useSelector(state => state.posts.dislikes);
   // const isLike = likes.includes(data.id);
@@ -38,6 +39,11 @@ const PostCard: React.FC<PropsType> = ({ data }) => {
   //const dislikes = useSelector(state => state.posts.dislikes);
   const isLike = grades[data.id] === PostGrade.like;
   const isDislike = grades[data.id] === PostGrade.dislike;
+
+  const marks = useSelector(state => state.posts.marks);
+  const isMarked = marks.includes(data.id);
+
+
 
   // способ перехода через js
   const handelClick = () => {
@@ -49,8 +55,9 @@ const PostCard: React.FC<PropsType> = ({ data }) => {
   const handleClickDislike = () => {
     dislikePost(data.id);
   }
-
-
+  const handleClickMark = () => {
+    markPost(data.id);
+  }
   return (
     <div className='post-card-conteiner'>
       <Image src={data.image} />
@@ -74,10 +81,14 @@ const PostCard: React.FC<PropsType> = ({ data }) => {
         <IconButton onClick={handleClickDislike}>
           <ThumbDownAltIcon className={`icon ${isDislike ? "_disliked" : ""}`} />
         </IconButton>
+        <IconButton onClick={handleClickMark}>
+          <MarkIcon className={`icon ${isMarked ? "_marked" : ""}`} />
+        </IconButton>
       </div>
     </div>
 
   )
 }
+
 
 export default PostCard;

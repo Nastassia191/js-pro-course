@@ -56,6 +56,12 @@
         fill: #f53607;
       }
     }
+
+    &._marked {
+      path {
+        fill: #dfdf10;
+      }
+    }
   }
 
   .actions-line {

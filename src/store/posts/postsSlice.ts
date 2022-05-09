@@ -1,23 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostGrade } from "../../enums/PostGrade";
+import Storage from "../../helpers/Storage";
 
 import PostsType from "../../types/PostsType";
 import { fetchPosts } from "./postsThunks";
 
-const getGradesFromStorage = (): GradesType => {
-  try {
-    return JSON.parse(localStorage.getItem("grades") || "") as GradesType;
-  } catch {
-    return {}
-  }
-}
 
-const setGradesToStorage = (data: GradesType) => {
-  try {
-    localStorage.setItem("grades", JSON.stringify(data));
-  } catch { }
 
-}
+
+
 
 type GradesType = {
   [prop: number]: PostGrade
@@ -27,6 +18,7 @@ type StoreType = {
   data: PostsType[],
   count: number,
   grades: GradesType,
+  marks: number[],
   // likes: number[],
   // dislikes: number[],
   loading: boolean,
@@ -36,7 +28,8 @@ const initialState: StoreType = {
   data: [],
   // likes: [],
   // dislikes: [],
-  grades: getGradesFromStorage(),
+  grades: Storage.get("grades", {}),
+  marks: Storage.get("marks", []),
   count: 0,
   loading: false,
 }
@@ -47,25 +40,25 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    likePost: (state, { payload }: PayloadAction<number>) => {
-      if (state.grades[payload] === PostGrade.like) {
-        delete state.grades[payload];
+    likePost: (state, { payload: postId }: PayloadAction<number>) => {
+      if (state.grades[postId] === PostGrade.like) {
+        delete state.grades[postId];
       } else {
-        state.grades[payload] = PostGrade.like;
+        state.grades[postId] = PostGrade.like;
       }
-      setGradesToStorage(state.grades);
+      Storage.set("grades", state.grades);
       //localStorage.setItem("grades", JSON.stringify(state.grades));
 
 
     },
-    dislikePost: (state, { payload }: PayloadAction<number>) => {
-      if (state.grades[payload] === PostGrade.dislike) {
-        delete state.grades[payload];
+    dislikePost: (state, { payload: postId }: PayloadAction<number>) => {
+      if (state.grades[postId] === PostGrade.dislike) {
+        delete state.grades[postId];
       } else {
-        state.grades[payload] = PostGrade.dislike;
+        state.grades[postId] = PostGrade.dislike;
       }
 
-      setGradesToStorage(state.grades);
+      Storage.set("grades", state.grades);
       // localStorage.setItem("grades", JSON.stringify(state.grades));
 
 
@@ -78,7 +71,7 @@ const postsSlice = createSlice({
       // }
 
 
-    }
+    },
     // setFetchPostsLoading: (state, action: PayloadAction<boolean>) => {
     //   state.loading = action.payload;
     // },
@@ -91,7 +84,17 @@ const postsSlice = createSlice({
     // setPostsCount: (state, action: PayloadAction<number>) => {
     //   state.count = action.payload;
     // },
+    markPost: (state, { payload: postId }: PayloadAction<number>) => {
+      if (state.marks.includes(postId)) {
+        state.marks = state.marks.filter(id => id !== postId);
+      } else {
+        state.marks.push(postId);
+      }
+      Storage.set("marks", state.marks);
+    },
   },
+
+
   extraReducers: builder => {
     builder.addCase(fetchPosts.pending, (state) => {
       state.loading = true;
