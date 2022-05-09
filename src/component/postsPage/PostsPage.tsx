@@ -1,52 +1,36 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useState } from 'react';
+import PostsServer from './PostsServer';
 // //import React from 'react';
-import PostCard from './card/Postcards';
-import usePosts from '../../apiHooks/usePosts';
-import PostsFilter from './PostsFilter';
-import { initialState, PostsFilterRuducer } from './PostsFilterRuducer';
 
 import './PostsPage.scss';
-import { useSelector } from '../hooks/useSelector';
-import { useActions } from '../hooks/useActions';
+import PostsFront from './PostsFront';
+import Button from '../ui/button/Button';
+
+
 
 type PropsType = {};
 
 
 
 const PostsPage: React.FC<PropsType> = () => {
+  const [isServerMode, setIsServerMode] = useState(true);
 
-  const [state, dispatch] = useReducer(PostsFilterRuducer, initialState);
-
-  const { fetchPosts } = useActions();
-
-
-  //const { data, loading, error } = usePosts(state);
-  const data = useSelector(state => state.posts.data);
-  const loading = useSelector(state => state.posts.loading);
-  const error = useSelector(state => state.posts.error);
-  const count = useSelector(state => state.posts.count);
-  const marks = useSelector(state => state.posts.marks);
-  const filtredData = data.filter(item => marks.includes(item.id));
-
-
-  useEffect(() => {
-    fetchPosts(state);
-  }, [state]);
+  const handleToggleMode = () => setIsServerMode((prev) => !prev);
 
   return (
     <div className='posts-container'>
-
-      <PostsFilter
-        count={count}
-        state={state}
-        dispatch={dispatch}
-      />
-
-      <div className='cards'>
-        {data.map((item) => <PostCard key={item.id} data={item} />)}
+      <Button onClick={handleToggleMode}>
+        Toggle
+      </Button>
+      <div className='mode-container'>
+        {isServerMode
+          ?
+          <PostsServer />
+          :
+          <PostsFront />
+        }
       </div>
-      {loading && "Loading..."}
-      {error}
+
     </div>
   )
 }

@@ -44,45 +44,47 @@ const Login: React.FC = () => {
   // }
   // 
   return (
-    <FormCard header="Login">
+    <div className='centre__content'>
+      <FormCard header="Login">
 
-      <FormTextField
-        autofocus={true}
-        label={t("login.name")}
-        name='name'
-        values={values}
-        setValues={setValues}
-      />
+        <FormTextField
+          autofocus={true}
+          label={t("login.name")}
+          name='name'
+          values={values}
+          setValues={setValues}
+        />
 
-      <FormTextField
-        label={t("login.email")}
-        type='email'
-        name='email'
-        values={values}
-        setValues={setValues}
-      />
+        <FormTextField
+          label={t("login.email")}
+          type='email'
+          name='email'
+          values={values}
+          setValues={setValues}
+        />
 
-      <FormTextField
-        label={t("login.password")}
-        type='password'
-        name='password'
-        values={values}
-        setValues={setValues}
-      />
-      <FormTextField
-        label={t("login.confirmPassword")}
-        type='password'
-        name='confirmPassword'
-        values={values}
-        setValues={setValues}
-      />
+        <FormTextField
+          label={t("login.password")}
+          type='password'
+          name='password'
+          values={values}
+          setValues={setValues}
+        />
+        <FormTextField
+          label={t("login.confirmPassword")}
+          type='password'
+          name='confirmPassword'
+          values={values}
+          setValues={setValues}
+        />
 
 
 
-      <Button onClick={handleSubmint}>
-        {t("login.submit")}
-      </Button>
-    </FormCard>
+        <Button onClick={handleSubmint}>
+          {t("login.submit")}
+        </Button>
+      </FormCard>
+    </div>
   )
 }
 

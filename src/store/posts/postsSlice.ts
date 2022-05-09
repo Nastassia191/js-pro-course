@@ -3,7 +3,7 @@ import { PostGrade } from "../../enums/PostGrade";
 import Storage from "../../helpers/Storage";
 
 import PostsType from "../../types/PostsType";
-import { fetchPosts } from "./postsThunks";
+import { fetchAllPosts, fetchPosts } from "./postsThunks";
 
 
 
@@ -114,6 +114,24 @@ const postsSlice = createSlice({
     });
 
 
+    builder.addCase(fetchAllPosts.pending, (state) => {
+      state.loading = true;
+      state.error = undefined;
+      state.data = [];
+    });
+
+    builder.addCase(fetchAllPosts.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    });
+
+    builder.addCase(fetchAllPosts.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.data = payload.data;
+      state.count = payload.count;
+    });
+
+
   }
 });
 
@@ -121,4 +139,5 @@ export const postsReducer = postsSlice.reducer;
 export const postsActions = {
   ...postsSlice.actions,
   fetchPosts,
+  fetchAllPosts,
 }

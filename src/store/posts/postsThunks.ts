@@ -43,3 +43,24 @@ export const fetchPosts = createAsyncThunk<FetchPostsType, PostsFilterType, { re
 
   }
 )
+
+
+export const fetchAllPosts = createAsyncThunk<FetchPostsType, undefined, { rejectValue: string }>(
+  "posts/fetchAllPosts",
+  async (_, thunkApi) => {
+
+    let url = `${URL}?limit=${1000}`;
+
+    try {
+      const response = await axios.get(url);
+      return {
+        data: response.data.results as PostsType[],
+        count: response.data.count as number,
+      }
+
+    } catch {
+      return thunkApi.rejectWithValue("server error");
+    }
+
+  }
+)

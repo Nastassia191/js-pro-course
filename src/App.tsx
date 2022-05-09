@@ -23,38 +23,38 @@ const App: React.FC = () => {
     <BrowserRouter>
       <div className="App-conteiner">
         <Header />
-        <div className='app-content'>
-
-
-          <Routes>
-            <Route path='/Clicker/*' element={
-              <div>
-                <Clicker />
-                <Clicker />
-                <Clicker />
-              </div>
-            } />
-            <Route path='/login/*' element={<Login />} />
-            <Route path='/registration/*' element={<Registration />} />
-            <Route path='/posts'  >
-              <Route index element={<PostsPage />} />
-              <Route path=':id' element={<PostPage />} />
-            </Route>
-            <Route path='*' element={<Navigate to='/posts' />} />
-          </Routes>
 
 
 
+        <Routes>
+          <Route path='/Clicker/*' element={
+            <div>
+              <Clicker />
+              <Clicker />
+              <Clicker />
+            </div>
+          } />
+          <Route path='/login/*' element={<Login />} />
+          <Route path='/registration/*' element={<Registration />} />
+          <Route path='/posts'  >
+            <Route index element={<PostsPage />} />
+            <Route path=':id' element={<PostPage />} />
+          </Route>
+          <Route path='*' element={<Navigate to='/posts' />} />
+        </Routes>
 
-          {/* <Post id={14} /> */}
-          {/* <Login /> */}
-          {/* <Registration /> */}
-          {/* <Posts /> */}
-          {/* <Clicker />*/}
 
 
 
-          {/*<Button
+        {/* <Post id={14} /> */}
+        {/* <Login /> */}
+        {/* <Registration /> */}
+        {/* <Posts /> */}
+        {/* <Clicker />*/}
+
+
+
+        {/*<Button
               color="blue"
               handclick={() => console.log("Click blue button")}
             ></Button>
@@ -62,7 +62,7 @@ const App: React.FC = () => {
               color="green"
               handclick={handclick}
         ></Button>*/}
-        </div>
+
       </div>
     </BrowserRouter>
   );
