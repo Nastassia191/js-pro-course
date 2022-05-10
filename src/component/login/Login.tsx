@@ -10,6 +10,9 @@ import FormCard from '../ui/formCard/FormCard';
 
 import useTranslete from "../hooks/useTranslete";
 import FormTextField from '../ui/formTextField/FormTextField';
+import { useActions } from '../hooks/useActions';
+import { useSelector } from '../hooks/useSelector';
+
 
 
 
@@ -21,11 +24,14 @@ const Login: React.FC = () => {
 
 
   const { t } = useTranslete();
+  const { createTokens } = useActions();
+  const loading = useSelector(state => state.auth.loading);
+  const error = useSelector(state => state.auth.error);
 
 
   const handleSubmint = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log(values);
+    createTokens(values);
   }
   // const setEmail = (value: string) => {
   //   setValue("email", value);
@@ -45,18 +51,10 @@ const Login: React.FC = () => {
   // 
   return (
     <div className='centre__content'>
-      <FormCard header="Login">
-
+      <FormCard header="Login" loading={loading}>
         <FormTextField
-          autofocus={true}
-          label={t("login.name")}
-          name='name'
-          values={values}
-          setValues={setValues}
-        />
-
-        <FormTextField
-          label={t("login.email")}
+          autofocus
+          label='Email'
           type='email'
           name='email'
           values={values}
@@ -64,19 +62,21 @@ const Login: React.FC = () => {
         />
 
         <FormTextField
-          label={t("login.password")}
+          label='Password'
           type='password'
           name='password'
           values={values}
           setValues={setValues}
         />
-        <FormTextField
-          label={t("login.confirmPassword")}
-          type='password'
-          name='confirmPassword'
-          values={values}
-          setValues={setValues}
-        />
+        {error &&
+          <div className='form-error'>
+            Error
+          </div>
+        }
+
+
+
+
 
 
 
