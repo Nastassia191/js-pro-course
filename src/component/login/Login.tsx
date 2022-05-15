@@ -12,6 +12,8 @@ import useTranslete from "../hooks/useTranslete";
 import FormTextField from '../ui/formTextField/FormTextField';
 import { useActions } from '../hooks/useActions';
 import { useSelector } from '../hooks/useSelector';
+import { setValue } from '../../store/clicker/actionCreators';
+import { getEmailError, getPasswordError } from '../../helpers/validation';
 
 
 
@@ -20,18 +22,36 @@ const Login: React.FC = () => {
 
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
-  const [values, setValues] = useState<FormValuesType>({});
+  const [values, _setValues] = useState<FormValuesType>({});
+  const [validathionsError, setValidationsError] = useState("");
 
 
   const { t } = useTranslete();
-  const { createTokens } = useActions();
+  const { createTokens, setAuthError } = useActions();
   const loading = useSelector(state => state.auth.loading);
-  const error = useSelector(state => state.auth.error);
+  const serverError = useSelector(state => state.auth.error);
+  const error: string = validathionsError || (serverError ? "   Error" : "");
 
 
   const handleSubmint = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    createTokens(values);
+
+    const validationError = getEmailError(values.email) || getPasswordError(values.password);
+    if (validationError) {
+      setValidationsError(validationError);
+    } else {
+      createTokens(values);
+    }
+  }
+
+
+
+
+
+  const setValues = (callback: (prevValue: FormValuesType) => FormValuesType) => {
+    _setValues(callback);
+    setValidationsError("");
+    setAuthError(false);
   }
   // const setEmail = (value: string) => {
   //   setValue("email", value);
@@ -70,7 +90,7 @@ const Login: React.FC = () => {
         />
         {error &&
           <div className='form-error'>
-            Error
+            {error}
           </div>
         }
 
