@@ -5,12 +5,17 @@ import useTranslete from "../hooks/useTranslete";
 
 import "./Header.scss";
 import { ReactComponent as Logo } from "../assets/logo.svg";
+import { ReactComponent as LogoutIcon } from "../assets/logout.svg";
+import { ReactComponent as LoginIcon } from "../assets/login.svg";
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import Username from "./username/Username";
+import { useSelector } from "../hooks/useSelector";
+import { useActions } from "../hooks/useActions";
 
 
 const LINKS = [
-  { url: "/login", text: "Login" },
+  // { url: "/login", text: "Login" },
   { url: "/registration", text: "Registration" },
   { url: "/posts", text: "Posts" },
 ]
@@ -19,6 +24,13 @@ const Header: React.FC = () => {
 
 
   const { lang, setLang } = useTranslete();
+  const logged = useSelector(state => state.auth.logged);
+  const { logout } = useActions();
+  //const links = getLinks(logged);;
+
+  const handleLogout = () => {
+    logout();
+  }
 
 
 
@@ -45,7 +57,9 @@ const Header: React.FC = () => {
 
       </ul>
 
-      <div>
+      <div className="controls">
+
+
         {lang === "en"
           ?
           <button onClick={() => setLang("ru")}>
@@ -55,6 +69,24 @@ const Header: React.FC = () => {
           <button onClick={() => setLang("en")}>
             en
           </button>
+        }
+
+        {logged ?
+          <>
+            <Username />
+            <LogoutIcon
+              className="icon-button logout-button"
+              onClick={handleLogout}
+            />
+          </>
+          :
+          <Link to="/login">
+            <LoginIcon
+              className="icon-button logout-button"
+              onClick={handleLogout}
+            />
+          </Link>
+
         }
 
         <Timer />

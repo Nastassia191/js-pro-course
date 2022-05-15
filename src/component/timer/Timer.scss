@@ -7,21 +7,4 @@
     margin-right: 10px;
   }
 
-  .icon-button {
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-
-    path {
-      fill: white;
-    }
-
-    &:hover {
-      path {
-        fill: rgb(162, 145, 219);
-      }
-    }
-
-  }
-
 }
