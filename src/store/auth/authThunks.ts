@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from "axios";
-import Storage from '../../helpers/Storage';
+import api from '../../helpers/api';
 import FormValuesType from '../../types/formValuesType';
 import ProfileType from '../../types/profileType';
 
@@ -14,8 +13,8 @@ type TokensType = {
 export const createTokens = createAsyncThunk<TokensType, FormValuesType>(
   "auth/createTokens",
   async (data) => {
-    const URL = "https://studapi.teachmeskills.by/auth/jwt/create/";
-    const response = await axios.post(URL, data);
+    const URL = "auth/jwt/create/";
+    const response = await api.post(URL, data);
     return response.data as TokensType;
   }
 )
@@ -23,17 +22,11 @@ export const createTokens = createAsyncThunk<TokensType, FormValuesType>(
 
 export const fetchProfile = createAsyncThunk<ProfileType>(
   "auth/fetchProfile",
-  async () => {
-    const URL = "https://studapi.teachmeskills.by/auth/users/me/";
-    const response = await axios.get(URL, {
-      headers: {
-        "Authorization": `Bearer${Storage.get("access", "")}`,
-      },
-    });
+  async (_, thunkApi) => {
+    const URL = "auth/users/me/";
+    const response = await api.get(URL, undefined, true, thunkApi.dispatch);
     return response.data as ProfileType;
   }
-  //     // const URL = "auth/users/me/";
-  //     const response = await api.get(URL, undefined, true, thunkApi.dispatch);
-  //     return response.data as ProfileType;
-  // }
-) 
+)
+
+

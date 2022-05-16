@@ -15,7 +15,7 @@ type StoreType = {
 }
 
 const initialState: StoreType = {
-  logged: Storage.get("access ", false),
+  logged: !!Storage.get("access ", false),
   loading: false,
   error: false,
   access: Storage.get("access ", undefined),
@@ -35,6 +35,10 @@ const authSlice = createSlice({
   reducers: {
     setAuthError: (state, { payload }: PayloadAction<boolean>) => {
       state.error = payload;
+    },
+    setAccess: (state, { payload }: PayloadAction<string>) => {
+      state.access = payload;
+      Storage.set("access", payload);
     },
     logout: (state) => {
       state.access = undefined;
