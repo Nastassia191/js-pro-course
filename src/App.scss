@@ -13,3 +13,20 @@
   align-items: center;
   justify-content: center;
 }
+
+.icon-button {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+
+  path {
+    fill: white;
+  }
+
+  &:hover {
+    path {
+      fill: rgb(162, 145, 219);
+    }
+  }
+
+}

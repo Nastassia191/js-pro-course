@@ -11,6 +11,8 @@ import Login from './component/login/Login';
 import PostPage from './component/postPage/PostPage';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from './component/hooks/useSelector';
+import MyPostsPage from './component/myPostsPage/MyPostsPage';
 
 
 
@@ -18,6 +20,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 const App: React.FC = () => {
   // const handclick = () => console.log(`Click green button`);
   const [lang, setLang] = useState("ru");
+  const logged = useSelector(state => state.auth.logged);
 
   return (
     <BrowserRouter>
@@ -34,12 +37,21 @@ const App: React.FC = () => {
               <Clicker />
             </div>
           } />
-          <Route path='/login/*' element={<Login />} />
-          <Route path='/registration/*' element={<Registration />} />
-          <Route path='/posts'  >
+          {!logged &&
+            <>
+              <Route path='/login/*' element={<Login />} />
+            </>
+
+          }
+
+          <Route path='/registration' element={<Registration />} />
+          <Route path='/posts/*'  >
             <Route index element={<PostsPage />} />
             <Route path=':id' element={<PostPage />} />
           </Route>
+          {logged &&
+            <Route path='/myposts' element={<MyPostsPage />} />
+          }
           <Route path='*' element={<Navigate to='/posts' />} />
         </Routes>
 
