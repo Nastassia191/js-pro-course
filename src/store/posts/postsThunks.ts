@@ -65,11 +65,11 @@ export const fetchPosts = createAsyncThunk<FetchPostsType, PostsFilterType, { re
 //   }
 // )
 
-export const fetchMyPosts = createAsyncThunk<PostsType[], undefined, { rejectValue: string }>(
-  "posts/fetchMyPosts",
-  async (_, thunkApi) => {
-    let url = `blog/posts/my_posts`;
-    const response = await api.get(url, undefined, true, thunkApi.dispatch);
-    return response.data as PostsType[];
-  }
-)
+// export const fetchMyPosts = createAsyncThunk<PostsType[], undefined, { rejectValue: string }>(
+//   "posts/fetchMyPosts",
+//   async (_, thunkApi) => {
+//     let url = `blog/posts/my_posts`;
+//     const response = await api.get(url, undefined, true, thunkApi.dispatch);
+//     return response.data as PostsType[];
+//   }
+// )

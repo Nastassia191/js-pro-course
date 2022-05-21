@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Storage from "../../helpers/Storage";
 import ProfileType from "../../types/profileType";
 
-import { createTokens, fetchProfile } from "./authThunks";
+import { createTokens } from "./authThunks";
 
 
 type StoreType = {

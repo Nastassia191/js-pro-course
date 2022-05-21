@@ -20,13 +20,13 @@ export const createTokens = createAsyncThunk<TokensType, FormValuesType>(
 )
 
 
-export const fetchProfile = createAsyncThunk<ProfileType>(
-  "auth/fetchProfile",
-  async (_, thunkApi) => {
-    const URL = "auth/users/me/";
-    const response = await api.get(URL, undefined, true, thunkApi.dispatch);
-    return response.data as ProfileType;
-  }
-)
+// export const fetchProfile = createAsyncThunk<ProfileType>(
+//   "auth/fetchProfile",
+//   async (_, thunkApi) => {
+//     const URL = "auth/users/me/";
+//     const response = await api.get(URL, undefined, true, thunkApi.dispatch);
+//     return response.data as ProfileType;
+//   }
+// )
 
 
