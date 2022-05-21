@@ -40,6 +40,17 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
+    fetchAllPosts: () => { },
+    setPosts: (state, { payload }: PayloadAction<PostsType[]>) => {
+      state.data = payload;
+    },
+
+    setPostsLoading: (state, { payload }: PayloadAction<boolean>) => {
+      state.loading = payload;
+    },
+    setPostsError: (state, { payload }: PayloadAction<string | undefined>) => {
+      state.error = payload;
+    },
     likePost: (state, { payload: postId }: PayloadAction<number>) => {
       if (state.grades[postId] === PostGrade.like) {
         delete state.grades[postId];
@@ -114,22 +125,22 @@ const postsSlice = createSlice({
     });
 
 
-    builder.addCase(fetchAllPosts.pending, (state) => {
-      state.loading = true;
-      state.error = undefined;
-      state.data = [];
-    });
+    // builder.addCase(fetchAllPosts.pending, (state) => {
+    //   state.loading = true;
+    //   state.error = undefined;
+    //   state.data = [];
+    // });
 
-    builder.addCase(fetchAllPosts.rejected, (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    });
+    // builder.addCase(fetchAllPosts.rejected, (state, { payload }) => {
+    //   state.loading = false;
+    //   state.error = payload;
+    // });
 
-    builder.addCase(fetchAllPosts.fulfilled, (state, { payload }) => {
-      state.loading = false;
-      state.data = payload.data;
-      state.count = payload.count;
-    });
+    // builder.addCase(fetchAllPosts.fulfilled, (state, { payload }) => {
+    //   state.loading = false;
+    //   state.data = payload.data;
+    //   state.count = payload.count;
+    // });
 
     builder.addCase(fetchMyPosts.pending, (state) => {
       state.loading = true;
@@ -155,6 +166,6 @@ export const postsReducer = postsSlice.reducer;
 export const postsActions = {
   ...postsSlice.actions,
   fetchPosts,
-  fetchAllPosts,
+  //fetchAllPosts,
   fetchMyPosts,
 }

@@ -15,11 +15,11 @@ type StoreType = {
 }
 
 const initialState: StoreType = {
-  logged: !!Storage.get("access ", false),
+  logged: !!Storage.get("access", false),
   loading: false,
   error: false,
-  access: Storage.get("access ", undefined),
-  refresh: Storage.get("refresh ", undefined),
+  access: Storage.get("access", undefined),
+  refresh: Storage.get("refresh", undefined),
   profile: {
     username: "",
     id: 0,
