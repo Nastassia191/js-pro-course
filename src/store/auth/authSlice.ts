@@ -33,9 +33,14 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    fetchProfile: () => { },
+    setProfile: (state, { payload }: PayloadAction<ProfileType>) => {
+      state.profile = payload;
+    },
     setAuthError: (state, { payload }: PayloadAction<boolean>) => {
       state.error = payload;
     },
+
     setAccess: (state, { payload }: PayloadAction<string>) => {
       state.access = payload;
       Storage.set("access", payload);
@@ -85,9 +90,9 @@ const authSlice = createSlice({
     //   state.error = true;
     // });
 
-    builder.addCase(fetchProfile.fulfilled, (state, { payload }) => {
-      state.profile = payload;
-    });
+    // builder.addCase(fetchProfile.fulfilled, (state, { payload }) => {
+    //   state.profile = payload;
+    // });
 
 
   }
@@ -97,5 +102,5 @@ export const authReducer = authSlice.reducer;
 export const authActions = {
   ...authSlice.actions,
   createTokens,
-  fetchProfile,
+  //fetchProfile,
 }
