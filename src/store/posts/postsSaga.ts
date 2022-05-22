@@ -29,7 +29,7 @@ const fetchAllPostsWorker = function* () {
     const response: FetchAllPostsType = yield axios.get(`https://studapi.teachmeskills.by/blog/posts?limit=${1000}`);
     yield put(postsActions.setPosts(response.data.results));
   } catch {
-    yield put(postsActions.setPostsError("server error"));
+    yield put(postsActions.setPostsError("server error!!!"));
   } finally {
     yield put(postsActions.setPostsLoading(false));
   }
@@ -55,7 +55,7 @@ const fetchMyPostsWorker = function* () {
     const response: FetchMyPostsType = yield call(sagaApi.get, `/blog/posts/my_posts`);
     yield put(postsActions.setPosts(response.data));
   } catch {
-    yield put(postsActions.setPostsError("server error"));
+    yield put(postsActions.setPostsError("server error!"));
   } finally {
     yield put(postsActions.setPostsLoading(false));
   }

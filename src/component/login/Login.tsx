@@ -28,7 +28,7 @@ const Login: React.FC = () => {
 
   const { t } = useTranslete();
   const { createTokens, setAuthError } = useActions();
-  const loading = useSelector(state => state.auth.loading);
+  const loading = false; //useSelector(state => state.auth.loading);
   const serverError = useSelector(state => state.auth.error);
   const error: string = validathionsError || (serverError ? "   Error" : "");
 

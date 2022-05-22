@@ -20,7 +20,7 @@ const refreshToken = function* () {
 const URL = "https://studapi.teachmeskills.by/";
 
 
-Storage
+
 
 const authFetch = (method: Method) => function* (uri: string, data?: any): any {
   const runRequest = function* (): any {
@@ -38,10 +38,15 @@ const authFetch = (method: Method) => function* (uri: string, data?: any): any {
   try {
     return yield call(runRequest);
   } catch (e: any) {
-    if (e.response.status === 401) {
+    if (e.response.status === 401 && Storage.get("refresh", "")) {
+      try {
+        yield call(refreshToken);
+        return yield call(runRequest);
+      } catch {
+        yield put(authActions.logout());
+        throw e;
+      }
 
-      yield call(refreshToken);
-      return yield call(runRequest);
     } else {
       throw e;
     }

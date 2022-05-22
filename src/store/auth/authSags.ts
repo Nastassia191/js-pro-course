@@ -1,5 +1,7 @@
-import { all, call, put, spawn, takeEvery } from "redux-saga/effects";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { all, call, put, spawn, takeEvery, takeLeading } from "redux-saga/effects";
 import sagaApi from "../../helpers/sagaApi";
+import FormValuesType from "../../types/formValuesType";
 import ProfileType from "../../types/profileType";
 import { authActions } from "./authSlice";
 
@@ -22,9 +24,39 @@ const fetchProfileWorker = function* () {
 }
 
 
+type CreateTokensType = {
+  data: {
+    access: string,
+    refresh: string,
+  },
+};
+
+const createTokensWatcher = function* () {
+  yield takeLeading(authActions.createTokens.type, createTokensWorker);
+};
+
+
+const createTokensWorker = function* ({ payload }: PayloadAction<FormValuesType>) {
+  yield put(authActions.setAuthLoading(true));
+  yield put(authActions.setAuthError(false));
+  try {
+    const { data }: CreateTokensType = yield call(sagaApi.post, `/auth/jwt/create/`, payload);
+    yield put(authActions.setAccess(data.access));
+    yield put(authActions.setRefresh(data.refresh));
+  } catch {
+    yield put(authActions.setAuthError(true));
+  } finally {
+    yield put(authActions.setAuthLoading(false));
+  }
+
+
+}
+
+
 const authSaga = function* () {
   yield all([
     spawn(fetchProfileWatcher),
+    spawn(createTokensWatcher),
   ])
 
 }
