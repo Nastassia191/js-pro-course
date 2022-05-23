@@ -3,7 +3,7 @@ import { PostGrade } from "../../enums/PostGrade";
 import Storage from "../../helpers/Storage";
 
 import PostsType from "../../types/PostsType";
-import { fetchAllPosts, fetchMyPosts, fetchPosts } from "./postsThunks";
+import { fetchPosts } from "./postsThunks";
 
 
 
@@ -40,6 +40,18 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
+    fetchAllPosts: () => { },
+    fetchMyPosts: () => { },
+    setPosts: (state, { payload }: PayloadAction<PostsType[]>) => {
+      state.data = payload;
+    },
+
+    setPostsLoading: (state, { payload }: PayloadAction<boolean>) => {
+      state.loading = payload;
+    },
+    setPostsError: (state, { payload }: PayloadAction<string | undefined>) => {
+      state.error = payload;
+    },
     likePost: (state, { payload: postId }: PayloadAction<number>) => {
       if (state.grades[postId] === PostGrade.like) {
         delete state.grades[postId];
@@ -47,7 +59,7 @@ const postsSlice = createSlice({
         state.grades[postId] = PostGrade.like;
       }
       Storage.set("grades", state.grades);
-      //localStorage.setItem("grades", JSON.stringify(state.grades));
+
 
 
     },
@@ -59,31 +71,8 @@ const postsSlice = createSlice({
       }
 
       Storage.set("grades", state.grades);
-      // localStorage.setItem("grades", JSON.stringify(state.grades));
-
-
-
-      // if (!state.dislikes.includes(payload)) {
-      //   state.dislikes.push(payload);
-      //   state.likes = state.likes.filter(id => i d !== payload);
-      // } else {
-      //   state.dislikes = state.dislikes.filter(id => id !== payload);
-      // }
-
-
     },
-    // setFetchPostsLoading: (state, action: PayloadAction<boolean>) => {
-    //   state.loading = action.payload;
-    // },
-    // setFetchPostsError: (state, action: PayloadAction<boolean>) => {
-    //   state.error = action.payload;
-    // },
-    // setPostsData: (state, action: PayloadAction<PostsType[]>) => {
-    //   state.data = action.payload;
-    // },
-    // setPostsCount: (state, action: PayloadAction<number>) => {
-    //   state.count = action.payload;
-    // },
+
     markPost: (state, { payload: postId }: PayloadAction<number>) => {
       if (state.marks.includes(postId)) {
         state.marks = state.marks.filter(id => id !== postId);
@@ -114,38 +103,6 @@ const postsSlice = createSlice({
     });
 
 
-    builder.addCase(fetchAllPosts.pending, (state) => {
-      state.loading = true;
-      state.error = undefined;
-      state.data = [];
-    });
-
-    builder.addCase(fetchAllPosts.rejected, (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    });
-
-    builder.addCase(fetchAllPosts.fulfilled, (state, { payload }) => {
-      state.loading = false;
-      state.data = payload.data;
-      state.count = payload.count;
-    });
-
-    builder.addCase(fetchMyPosts.pending, (state) => {
-      state.loading = true;
-      state.error = undefined;
-      state.data = [];
-    });
-
-    builder.addCase(fetchMyPosts.rejected, (state, { payload }) => {
-      state.loading = false;
-      state.error = "Error";
-    });
-
-    builder.addCase(fetchMyPosts.fulfilled, (state, { payload }) => {
-      state.loading = false;
-      state.data = payload;
-    });
 
 
   }
@@ -155,6 +112,5 @@ export const postsReducer = postsSlice.reducer;
 export const postsActions = {
   ...postsSlice.actions,
   fetchPosts,
-  fetchAllPosts,
-  fetchMyPosts,
+
 }
